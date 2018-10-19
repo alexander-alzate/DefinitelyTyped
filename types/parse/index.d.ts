@@ -67,53 +67,6 @@ declare namespace Parse {
         silent?: boolean;
     }
 
-    /**
-     * A Promise is returned by async methods as a hook to provide callbacks to be
-     * called when the async task is fulfilled.
-     *
-     * <p>Typical usage would be like:<pre>
-     *    query.find().then(function(results) {
-     *      results[0].set("foo", "bar");
-     *      return results[0].saveAsync();
-     *    }).then(function(result) {
-     *      console.log("Updated " + result.id);
-     *    });
-     * </pre></p>
-     *
-     * @see Parse.Promise.prototype.then
-     * @class
-     */
-
-    interface IPromise<T> {
-
-        then<U>(resolvedCallback: (...values: T[]) => IPromise<U>, rejectedCallback?: (reason: any) => IPromise<U>): IPromise<U>;
-        then<U>(resolvedCallback: (...values: T[]) => U, rejectedCallback?: (reason: any) => IPromise<U>): IPromise<U>;
-        then<U>(resolvedCallback: (...values: T[]) => U, rejectedCallback?: (reason: any) => U): IPromise<U>;
-        catch<U>(resolvedCallback: (...values: T[]) => U, rejectedCallback?: (reason: any) => U): IPromise<U>;
-    }
-
-    class Promise<T> implements IPromise<T> {
-
-        static as<U>(resolvedValue: U): Promise<U>;
-        static error(error: any): Promise<any>;
-        static is(possiblePromise: any): Boolean;
-        static when(promises: IPromise<any>[]): Promise<any>;
-        static when(...promises: IPromise<any>[]): Promise<any>;
-
-        always(callback: Function): Promise<T>;
-        done(callback: Function): Promise<T>;
-        fail(callback: Function): Promise<T>;
-        reject(error: any): void;
-        resolve(result: any): void;
-        then<U>(resolvedCallback: (...values: T[]) => IPromise<U>,
-            rejectedCallback?: (reason: any) => IPromise<U>): IPromise<U>;
-        then<U>(resolvedCallback: (...values: T[]) => U,
-            rejectedCallback?: (reason: any) => IPromise<U>): IPromise<U>;
-        then<U>(resolvedCallback: (...values: T[]) => U,
-            rejectedCallback?: (reason: any) => U): IPromise<U>;
-        catch<U>(resolvedCallback: (...values: T[]) => U, rejectedCallback?: (reason: any) => U): IPromise<U>;
-    }
-
     interface Pointer {
         __type: string;
         className: string;
